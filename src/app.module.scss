@@ -1,0 +1,24 @@
+.main {
+  display: flex;
+  height: 100%;
+  font-size: 14px;
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+        to right,
+        transparent,
+        transparent 50%,
+        #eee 50%,
+        #eee 100%
+      )
+      left top / 20px 100%,
+    linear-gradient(
+        to bottom,
+        transparent,
+        transparent 50%,
+        #eee 50%,
+        #eee 100%
+      )
+      left top / 100% 20px;
+}

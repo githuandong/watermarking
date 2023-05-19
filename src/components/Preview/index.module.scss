@@ -1,0 +1,11 @@
+.wrap {
+  flex: 1;
+  height: 100%;
+  canvas {
+    position: fixed;
+    background-color: #fff;
+  }
+  div {
+    height: 100%;
+  }
+}

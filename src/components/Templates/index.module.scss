@@ -1,0 +1,35 @@
+.wrap {
+  overflow: auto hidden;
+  position: absolute;
+  left: 200px;
+  top: 0;
+  right: 300px;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  padding: 12px;
+}
+
+.imgItem {
+  background-color: #fff;
+  border: 4px solid transparent;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+
+  & + .imgItem {
+    margin-left: 10px;
+  }
+  &.active {
+    border-color: #1677ff;
+  }
+  img {
+    display: block;
+    height: 100px;
+    width: 140px;
+    object-fit: contain;
+  }
+}
