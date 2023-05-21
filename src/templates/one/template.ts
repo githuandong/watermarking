@@ -1,6 +1,6 @@
 // 照片底部展示
 const tpl = {
-  name: "模板一",
+  name: "底部水印",
   // 边框宽度，相对图片height
   border: 0.02,
   // 水印区域高度，相对图片height

@@ -29,7 +29,7 @@ export const initPreview = (path: string) => {
         "拍摄参数",
         `${res.FocalLength}mm  F${
           Math.round(Math.pow(1.4142, res.ApertureValue) * 10) / 10
-        } 1/${Math.ceil(Math.pow(2, res.ShutterSpeedValue))}S ISO${res.ISO}`
+        }  1/${Math.ceil(Math.pow(2, res.ShutterSpeedValue))}S  ISO${res.ISO}`
       );
       setTplValue(template, "图标", getMakeLogo(res.LensMake));
     }

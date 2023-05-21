@@ -45,7 +45,7 @@ const Images: FC = () => {
     <div className={styles.wrap}>
       <div className={styles.btns}>
         <div onClick={handleImport}>导入图片</div>
-        <div>一键导出</div>
+        {/* <div>一键导出</div> */}
       </div>
       {imgs.map((item) => (
         <div

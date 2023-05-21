@@ -72,10 +72,10 @@ const Preview: FC = () => {
         width: w,
         height: h,
       });
-      setOffset(() => ({
-        x: Math.floor(ev.clientX - origin![0] * w),
-        y: Math.floor(ev.clientY - origin![1] * h),
-      }));
+      setOffset({
+        x: Math.floor(ev.clientX - origin[0] * w),
+        y: Math.floor(ev.clientY - origin[1] * h),
+      });
     };
     wheelEL.addEventListener("wheel", handleWheel, {
       passive: false,

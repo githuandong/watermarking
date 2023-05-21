@@ -3,7 +3,7 @@
   overflow: hidden auto;
   position: relative;
   z-index: 2;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
   background-color: rgba(255, 255, 255, 0.5);
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -29,7 +29,7 @@
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
   overflow: hidden;
-  margin: 0 10px 10px 0;
+  margin: 0 calc((100% - 240px) / 2) calc((100% - 240px) / 2) 0;
   &:nth-child(3n) {
     margin-right: 0;
   }

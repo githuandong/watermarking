@@ -53,7 +53,7 @@ const Images: FC = () => {
   const handleExport = () => {
     // window.bridge.export(template, [imgPath]);
     let a = document.createElement("a");
-    a.download = imgPath.match(/\/[^\/]+$/)![0].slice(1);
+    a.download = imgPath.split(/[\/\\]/).pop();
     document.querySelector("canvas")!.toBlob(
       (blob) => {
         a.href = URL.createObjectURL(blob!);
@@ -85,7 +85,7 @@ const Images: FC = () => {
             <div onClick={handleExport} className={styles.btnWrap}>
               导出图片
             </div>
-            <div style={{ padding: 20 }}>
+            <div style={{ padding: 18 }}>
               <Form.Item label="边框宽度" name="border">
                 <Slider min={0} step={0.01} max={0.5} />
               </Form.Item>

@@ -16,7 +16,7 @@ const Images: FC = () => {
           key={e.template.name}
         >
           <img src={e.demo} alt="pic" />
-          <span>模板一</span>
+          <span>{e.template.name}</span>
         </div>
       ))}
     </div>
