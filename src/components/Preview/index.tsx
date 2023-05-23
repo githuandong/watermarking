@@ -2,6 +2,8 @@ import { FC, useState, useEffect, useRef } from "react";
 import styles from "./index.module.scss";
 import useStroe from "@/store";
 import _ from "lodash";
+import { getMakeLogo } from "@/templates/logos";
+import templates from "@/templates";
 
 let oldImgPath = "";
 let oldTplName = "";
@@ -13,11 +15,7 @@ const Preview: FC = () => {
     height: 0,
   });
   const aspectRatioRef = useRef(0);
-  const [imgPath, template, draw] = useStroe((state) => [
-    state.imgPath,
-    state.template,
-    state.draw!,
-  ]);
+  const { selectedImg, imgList, template } = useStroe((state) => state);
 
   /** 拖动处理 **/
   const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -51,7 +49,7 @@ const Preview: FC = () => {
     const wheelEL = wheelRef.current!;
     let origin: number[] | null = null;
     const handleWheel = (ev: WheelEvent) => {
-      if (!imgPath && cvsRect.width > 0) return;
+      if (!selectedImg && cvsRect.width > 0) return;
       ev.preventDefault();
       if (!origin) {
         // 第一次触发，计算原点
@@ -84,13 +82,22 @@ const Preview: FC = () => {
   }, [cvsRect, origin]);
 
   useEffect(() => {
-    if (imgPath) {
-      const isUpdate = oldImgPath === imgPath && oldTplName === template.name;
-      !isUpdate && setCvsRect({ width: 0, height: 0 });
+    if (selectedImg) {
       const cvs = cvsRef.current!;
       const ctx = cvs.getContext("2d");
+      const imgPath = selectedImg.path;
+      const isUpdate = oldImgPath === imgPath && oldTplName === template.name;
+      !isUpdate && setCvsRect({ width: 0, height: 0 });
+      // 厂商logo地址获取
+      const tpl = _.cloneDeep(template);
+      let e = tpl.box.items.find((e: any) => e.type === "icon");
+      e.value = getMakeLogo(e.value);
+      // 获取渲染函数
+      const draw = templates.find(
+        (e) => e.template.name === template.name
+      ).draw;
 
-      draw(`file://${imgPath}`, ctx, _.cloneDeep(template), {
+      draw(`file://${imgPath}`, ctx, tpl, {
         sizeInit: ({ width, height }: any) => {
           // 设置画布宽高
           cvs.width = width;
@@ -124,8 +131,12 @@ const Preview: FC = () => {
             };
           }),
       });
+    } else {
+      setCvsRect({ width: 0, height: 0 });
+      oldImgPath = "";
+      oldTplName = "";
     }
-  }, [imgPath, template]);
+  }, [selectedImg, template]);
 
   return (
     <div ref={wheelRef} className={styles.wrap}>

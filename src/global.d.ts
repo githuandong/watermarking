@@ -4,11 +4,11 @@ interface Window {
       {
         dataURL: string;
         path: string;
+        tags: Record<string, any>;
       }[]
     >;
     readEXIF: (path: string) => Promise<any>;
-    // getLogos: () => Promise<Record<string, string>>;
-    export: (tpl: any, paths: string[]) => Promise<any>;
+    export: (tplName: strinng, imgList: any[]) => Promise<any>;
   };
 }
 
@@ -25,3 +25,4 @@ declare module "*.jpeg";
 declare module "*.gif";
 declare module "*.bmp";
 declare module "*.tiff";
+declare module "@/assets/font/iconfont.js";

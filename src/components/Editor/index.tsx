@@ -47,26 +47,21 @@ const FormInput: FC<{ item: any; index: number }> = ({ item, index }) => {
 };
 
 const Images: FC = () => {
-  const { imgPath, template } = useStore((state) => state);
+  const { selectedImg, template } = useStore((state) => state);
   const [form] = Form.useForm();
 
   const handleExport = () => {
-    // window.bridge.export(template, [imgPath]);
-    let a = document.createElement("a");
-    a.download = imgPath.split(/[\/\\]/).pop();
-    document.querySelector("canvas")!.toBlob(
-      (blob) => {
-        a.href = URL.createObjectURL(blob!);
-        a.click();
+    window.bridge.export(template, [
+      {
+        path: selectedImg.path,
+        tags: selectedImg.tags,
       },
-      "image/jpeg",
-      1
-    );
+    ]);
   };
 
   useEffect(() => {
     form.setFieldsValue(_.cloneDeep(template));
-  }, [imgPath, template]);
+  }, [template]);
 
   return (
     <div className={styles.wrap}>
@@ -80,7 +75,7 @@ const Images: FC = () => {
           });
         }, 300)}
       >
-        {imgPath && (
+        {selectedImg && (
           <>
             <div onClick={handleExport} className={styles.btnWrap}>
               导出图片

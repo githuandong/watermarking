@@ -1,11 +1,17 @@
 import { create } from "zustand";
 
+export type ImgItem = {
+  dataURL: string;
+  path: string;
+  tags: Record<string, any>;
+};
+
 export default create<{
-  imgPath: string;
+  imgList: ImgItem[];
+  selectedImg: ImgItem | null;
   template: any;
-  draw: null | typeof import("@/templates/one/draw").default;
 }>(() => ({
-  imgPath: "",
+  imgList: [],
+  selectedImg: null,
   template: null,
-  draw: null,
 }));

@@ -1,43 +1,62 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import styles from "./index.module.scss";
 import useStore from "@/store/index";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import _ from "lodash";
-import { initPreview } from "@/templates/utils";
-
-dayjs.extend(utc);
+import { ImgItem } from "@/store";
+import templates from "@/templates";
+import { message } from "antd";
+import Icon from "@/components/Icon";
 
 const Images: FC = () => {
-  const [imgs, setImgs] = useState<
-    {
-      dataURL: string;
-      path: string;
-    }[]
-  >([]);
-  const imgPath = useStore((state) => state.imgPath);
+  const { imgList, selectedImg, template } = useStore((state) => state);
 
-  const setActiveImg = (item: (typeof imgs)[0]) => {
-    initPreview(item.path);
+  const setActiveImg = (item: ImgItem | null) => {
+    useStore.setState({
+      selectedImg: item || null,
+      template: item ? templates[0].write(item.tags) : null,
+    });
   };
 
   const handleImport = () => {
     window.bridge.importFile().then((files) => {
       if (files.length > 0) {
         let list = [
-          ...imgs,
-          ...files
-            .filter((e) => !imgs.find((p) => p.path === e.path))
-            .map((e) => ({
-              dataURL: e.dataURL,
-              path: e.path,
-            })),
+          ...imgList,
+          ...files.filter((e) => !imgList.find((p) => p.path === e.path)),
         ];
-        setImgs(list);
-        if (!imgPath) {
+        useStore.setState({
+          imgList: list,
+        });
+        if (!selectedImg) {
           setActiveImg(list[0]);
         }
       }
+    });
+  };
+
+  const handleExport = () => {
+    if (imgList.length === 0) {
+      message.warning("请先导入图片");
+      return;
+    }
+    window.bridge.export(
+      template,
+      imgList.map((e) => ({
+        path: e.path,
+        tags: e.tags,
+      }))
+    );
+  };
+  const handleRemove = (index: number) => {
+    const newList = [...imgList];
+    newList.splice(index, 1);
+    if (newList.length > 0) {
+      setActiveImg(newList[0]);
+    } else {
+      setActiveImg(null);
+    }
+    useStore.setState({
+      imgList: newList,
     });
   };
 
@@ -45,17 +64,25 @@ const Images: FC = () => {
     <div className={styles.wrap}>
       <div className={styles.btns}>
         <div onClick={handleImport}>导入图片</div>
-        {/* <div>一键导出</div> */}
+        <div onClick={handleExport}>一键导出</div>
       </div>
-      {imgs.map((item) => (
+      {imgList.map((item, index) => (
         <div
           key={item.path}
-          onClick={() => imgPath !== item.path && setActiveImg(item)}
           className={`${styles.imgWrap} ${
-            imgPath === item.path ? styles.active : ""
+            selectedImg.path === item.path ? styles.active : ""
           }`}
         >
           <img draggable={false} src={item.dataURL} alt="pic" />
+          <div className={styles.icons}>
+            <Icon onClick={() => handleRemove(index)} type="icon-shanchu" />
+            <Icon
+              onClick={() =>
+                selectedImg.path !== item.path && setActiveImg(item)
+              }
+              type="icon-eye-fill"
+            />
+          </div>
         </div>
       ))}
     </div>

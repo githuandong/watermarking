@@ -53,7 +53,8 @@ export default async (
   items.forEach(({ style }) => {
     style.fontSize && (style.fontSize = Math.floor(style.fontSize * boxHeight));
   });
-  items.forEach(async (item) => {
+
+  for (const item of items) {
     if (isText(item)) {
       // 绘制文字
       const { name, value, style } = item;
@@ -123,5 +124,5 @@ export default async (
         ctx.drawImage(logo, style.x, style.y, style.width, style.height);
       }
     }
-  });
+  }
 };

@@ -32,4 +32,8 @@ export const rules: Required<ModuleOptions>["rules"] = [
     test: /\.(png|jpe?g|gif|webp)$/,
     type: "asset/resource",
   },
+  {
+    test: /\iconfont.js$/,
+    type: "asset/resource",
+  },
 ];
