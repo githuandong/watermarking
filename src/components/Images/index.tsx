@@ -39,13 +39,17 @@ const Images: FC = () => {
       message.warning("请先导入图片");
       return;
     }
-    window.bridge.export(
-      template,
-      imgList.map((e) => ({
-        path: e.path,
-        tags: e.tags,
-      }))
-    );
+    window.bridge
+      .export(
+        template,
+        imgList.map((e) => ({
+          path: e.path,
+          tags: e.tags,
+        }))
+      )
+      .then(() => {
+        message.success("导出成功！");
+      });
   };
   const handleRemove = (index: number) => {
     const newList = [...imgList];

@@ -4,7 +4,7 @@ import fs from "fs";
 import ExifParser from "exif-parser";
 import templates from "./templates/index";
 import { getMakeLogo } from "./templates/logos";
-import { createCanvas, loadImage } from "canvas";
+import { createCanvas, loadImage } from "@napi-rs/canvas";
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -144,9 +144,7 @@ ipcMain.handle(
           }),
       });
       // 导出
-      const buffer = cvs.toBuffer("image/jpeg", {
-        quality: 1,
-      });
+      const buffer = cvs.toBuffer("image/jpeg", 100);
       await new Promise<void>((resolve) => {
         fs.writeFile(
           isOne

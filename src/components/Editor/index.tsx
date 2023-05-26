@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import styles from "./index.module.scss";
 import useStore from "@/store";
-import { Form, Input, Slider } from "antd";
+import { Form, Input, Slider, message } from "antd";
 import _ from "lodash";
 import { logos } from "@/templates/logos";
 
@@ -51,12 +51,16 @@ const Images: FC = () => {
   const [form] = Form.useForm();
 
   const handleExport = () => {
-    window.bridge.export(template, [
-      {
-        path: selectedImg.path,
-        tags: selectedImg.tags,
-      },
-    ]);
+    window.bridge
+      .export(template, [
+        {
+          path: selectedImg.path,
+          tags: selectedImg.tags,
+        },
+      ])
+      .then(() => {
+        message.success("导出成功！");
+      });
   };
 
   useEffect(() => {
