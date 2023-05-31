@@ -45,3 +45,15 @@
     border-color: #1677ff;
   }
 }
+
+.formItem {
+  display: flex;
+  align-items: center;
+  span {
+    width: 50px;
+    flex-shrink: 0;
+  }
+  > div {
+    flex: 1;
+  }
+}

@@ -19,7 +19,7 @@ export default async (
   // 边框宽度
   const borderWidth = Math.floor(imgHeight * tpl.border);
   // 信息容器高度
-  const boxHeight = Math.floor(imgHeight * tpl.boxHeight);
+  const boxHeight = Math.floor(tpl.boxHeight * Math.min(imgWidth, imgHeight));
   // 设置画布尺寸
   const width = imgWidth + borderWidth * 2;
   const height = imgHeight + borderWidth + boxHeight;
@@ -34,8 +34,16 @@ export default async (
   // 重置画布
   ctx.fillStyle = "#fff";
   ctx.fillRect(0, 0, width, height);
+  // 绘制阴影
+  ctx.shadowOffsetX = Math.floor(boxHeight * tpl.shadow[0]);
+  ctx.shadowOffsetY = Math.floor(boxHeight * tpl.shadow[1]);
+  ctx.shadowBlur = Math.floor(boxHeight * tpl.shadow[2]);
+  ctx.shadowColor = `rgba(0,0,0,${tpl.shadow[3]})`;
   // 写入图片
   ctx.drawImage(img, borderWidth, borderWidth, imgWidth, imgHeight);
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 0;
+  ctx.shadowBlur = 0;
 
   // 记录信息绘制区域坐标
   const boxX = borderWidth;

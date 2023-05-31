@@ -88,6 +88,32 @@ const Images: FC = () => {
               <Form.Item label="边框宽度" name="border">
                 <Slider min={0} step={0.01} max={0.5} />
               </Form.Item>
+              <Form.Item label="阴影设置">
+                <div className={styles.formItem}>
+                  <span>X轴</span>
+                  <Form.Item noStyle name={["shadow", 0]}>
+                    <Slider min={-0.5} step={0.01} max={0.5} />
+                  </Form.Item>
+                </div>
+                <div className={styles.formItem}>
+                  <span>Y轴</span>
+                  <Form.Item noStyle name={["shadow", 1]}>
+                    <Slider min={-0.5} step={0.01} max={0.5} />
+                  </Form.Item>
+                </div>
+                <div className={styles.formItem}>
+                  <span>模糊值</span>
+                  <Form.Item noStyle name={["shadow", 2]}>
+                    <Slider min={0} step={0.01} max={1} />
+                  </Form.Item>
+                </div>
+                <div className={styles.formItem}>
+                  <span>深浅</span>
+                  <Form.Item noStyle name={["shadow", 3]}>
+                    <Slider min={0} step={0.1} max={1} />
+                  </Form.Item>
+                </div>
+              </Form.Item>
               {template.box.items.map((e: any, index: number) => (
                 <FormInput key={e.name} index={index} item={e} />
               ))}

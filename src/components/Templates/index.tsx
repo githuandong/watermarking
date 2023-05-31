@@ -15,7 +15,6 @@ const Images: FC = () => {
           }`}
           key={e.template.name}
         >
-          <img src={e.demo} alt="pic" />
           <span>{e.template.name}</span>
         </div>
       ))}

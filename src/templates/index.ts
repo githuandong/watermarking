@@ -1,6 +1,5 @@
 import oneTpl from "./one/template";
 import oneDraw from "./one/draw";
-import demo from "./one/demo.jpg";
 import _ from "lodash";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -42,7 +41,6 @@ export default [
   {
     template: oneTpl,
     draw: oneDraw,
-    demo: demo,
     // 根据图片信息生成模板
     write: (tags: Tags) =>
       genTemplate(
